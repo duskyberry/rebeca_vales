@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vales Rebeca · Calcula tus pagos</title>
+<meta name="description" content="Consulta tus opciones y calcula fácilmente cuánto pagarás en cada quincena.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top"><a class="brand" href="#inicio">Vales Rebeca</a></header>
+
+<main id="inicio">
+<section class="hero">
+  <h1>Tu compra, tus pagos y todo mucho más claro.</h1>
+  <p>Consulta tus opciones y calcula fácilmente cuánto pagarás en cada quincena.</p>
+  <a class="btn" href="#calculadora">Ir a la calculadora</a>
+</section>
+
+<section id="calculadora" class="card calc" aria-labelledby="calc-t">
+  <h2 id="calc-t">Calcula tus pagos</h2>
+  <form id="calc-form" novalidate>
+    <fieldset class="step">
+      <legend><span class="n">1</span>¿En qué tienda es tu compra?</legend>
+      <div class="stores">
+        <label class="opt"><input type="radio" name="store" value="bh"><span>B Hermanos</span></label>
+        <label class="opt"><input type="radio" name="store" value="mod"><span>Moderna</span></label>
+        <label class="opt"><input type="radio" name="store" value="jr"><span>JR</span></label>
+        <label class="opt"><input type="radio" name="store" value="lux"><span>Luxor</span></label>
+      </div>
+      <div id="bh-mode" class="sub" hidden>
+        <p class="hint">¿Cómo pagaste en B Hermanos?</p>
+        <div class="seg">
+          <label class="opt"><input type="radio" name="mode" value="bhe" checked><span>Efectivo</span></label>
+          <label class="opt"><input type="radio" name="mode" value="bhm"><span>Mercancía</span></label>
+        </div>
+      </div>
+    </fieldset>
+
+    <div id="pending" class="notice" data-show="bhm" hidden>
+      <strong>Simulación pendiente.</strong> Para B Hermanos con mercancía todavía no están confirmadas las condiciones de pago, así que no podemos calcular tus abonos automáticamente. Consúltalo directamente con Vales Rebeca.
+    </div>
+
+    <div id="fields" hidden>
+      <div class="step" data-show="bhe mod jr lux">
+        <label for="amount"><span class="n">2</span>Importe de tu compra <em id="amount-opt"></em></label>
+        <input id="amount" inputmode="decimal" autocomplete="off" placeholder="$5,000.00">
+        <p class="err" id="amount-err" role="alert"></p>
+      </div>
+
+      <div class="step" data-show="mod">
+        <span class="lbl" id="term-lbl"><span class="n">3</span>Plazo en quincenas</span>
+        <div class="seg" role="radiogroup" aria-labelledby="term-lbl">
+          <label class="opt"><input type="radio" name="term" value="8"><span>8 quincenas</span></label>
+          <label class="opt"><input type="radio" name="term" value="12"><span>12 quincenas</span></label>
+        </div>
+        <p class="err" id="term-err" role="alert"></p>
+      </div>
+      <div class="step" data-show="bhe jr lux">
+        <label for="n"><span class="n">3</span>Número de quincenas</label>
+        <input id="n" type="number" inputmode="numeric" min="2" max="52" step="1" placeholder="Ej. 8">
+        <p class="hint">Es el plazo que aparece en tu ticket.</p>
+        <p class="err" id="n-err" role="alert"></p>
+      </div>
+
+      <div class="step" data-show="lux">
+        <span class="lbl" id="ins-lbl"><span class="n">4</span>Seguro que te cobraron</span>
+        <div class="seg" role="radiogroup" aria-labelledby="ins-lbl">
+          <label class="opt"><input type="radio" name="ins" value="2800"><span>$28</span></label>
+          <label class="opt"><input type="radio" name="ins" value="2900"><span>$29</span></label>
+          <label class="opt"><input type="radio" name="ins" value="3000"><span>$30</span></label>
+        </div>
+        <p class="err" id="ins-err" role="alert"></p>
+      </div>
+      <div class="step" data-show="bhe mod jr lux">
+        <label for="pay"><span class="n" id="pay-n">4</span><span id="pay-lbl">Primer abono</span></label>
+        <input id="pay" inputmode="decimal" autocomplete="off" placeholder="$750.00">
+        <p class="hint" id="pay-hint"></p>
+        <p class="err" id="pay-err" role="alert"></p>
+      </div>
+
+      <div class="actions">
+        <button class="btn" type="submit" id="calc-btn">Calcular mis pagos</button>
+        <button class="btn ghost" type="reset" id="reset-btn">Limpiar</button>
+      </div>
+    </div>
+  </form>
+
+  <div id="result" class="result" tabindex="-1" aria-live="polite" hidden></div>
+</section>
+
+<p class="disclaimer">Los importes mostrados son estimaciones informativas. Los pagos y condiciones definitivas pueden variar según la tienda y las condiciones de tu compra. Confirma los importes directamente con Vales Rebeca.</p>
+
+<section class="info" aria-labelledby="info-t">
+  <h2 id="info-t">Información que te puede ayudar.</h2>
+  <p class="lead">Toca cualquier imagen para verla más grande.</p>
+  <div class="gallery">
+    <figure>
+      <button type="button" class="thumb" data-full="img/bhermanos.png" data-alt="B Hermanos, pago en efectivo: a partir del segundo recibo son $10 pesos menos. Ejemplo: si el primer recibo fue de $1,950, el segundo será de $1,940. Guarda tu ticket.">
+        <img src="img/bhermanos.png" width="1122" height="1402" loading="lazy" alt="B Hermanos, pago en efectivo: a partir del segundo recibo son $10 pesos menos. Ejemplo: si el primer recibo fue de $1,950, el segundo será de $1,940. Guarda tu ticket.">
+      </button>
+      <figcaption>B Hermanos · pago en efectivo</figcaption>
+    </figure>
+    <figure>
+      <button type="button" class="thumb" data-full="img/jr.png" data-alt="JR Sombreros: son $30 pesos más por cada compra en el primer recibo, no por vale. Guarda tu ticket.">
+        <img src="img/jr.png" width="1024" height="1536" loading="lazy" alt="JR Sombreros: son $30 pesos más por cada compra en el primer recibo, no por vale. Guarda tu ticket.">
+      </button>
+      <figcaption>JR · seguro de $30</figcaption>
+    </figure>
+    <figure>
+      <button type="button" class="thumb" data-full="img/moderna.png" data-alt="Cálculo del nuevo abono en seis pasos: toma la cantidad por quincena, multiplícala por el total de quincenas, réstale el total de tus compras, divide entre las quincenas restantes, réstalo al abono y obtén tu nuevo abono desde la segunda quincena.">
+        <img src="img/moderna.png" width="1122" height="1402" loading="lazy" alt="Cálculo del nuevo abono en seis pasos: toma la cantidad por quincena, multiplícala por el total de quincenas, réstale el total de tus compras, divide entre las quincenas restantes, réstalo al abono y obtén tu nuevo abono desde la segunda quincena.">
+      </button>
+      <figcaption>Moderna · cálculo del nuevo abono</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="card request" aria-labelledby="req-t">
+  <h2 id="req-t">¿Necesitas un vale nuevo?</h2>
+  <p>Cuéntanos qué tienda te interesa y qué cantidad tienes en mente. Estamos para ayudarte.</p>
+  <form id="req-form" novalidate>
+    <label for="shop">Tienda deseada</label>
+    <select id="shop" required>
+      <option value="">Elige una tienda</option>
+      <option>B Hermanos</option><option>Moderna</option><option>JR</option><option>Luxor</option>
+      <option value="otra">Otra tienda…</option>
+    </select>
+    <input id="shop-other" placeholder="Escribe el nombre de la tienda" aria-label="Nombre de la otra tienda" hidden>
+    <p class="err" id="shop-err" role="alert"></p>
+    <label for="want">Cantidad esperada</label>
+    <input id="want" inputmode="decimal" autocomplete="off" placeholder="$3,000.00" required>
+    <p class="err" id="want-err" role="alert"></p>
+    <button class="btn" type="submit">Solicitar mi vale</button>
+  </form>
+  <div id="req-status" class="notice" role="status" hidden></div>
+</section>
+</main>
+
+<footer class="foot"><strong>Dios te bendice.</strong><span>Gracias por tu confianza.</span></footer>
+
+<dialog id="lightbox" aria-label="Imagen ampliada">
+  <button type="button" id="lb-close" aria-label="Cerrar imagen">Cerrar</button>
+  <img id="lb-img" alt="">
+</dialog>
+<script src="script.js"></script>
+</body>
+</html>
